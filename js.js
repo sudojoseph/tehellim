@@ -1,17 +1,35 @@
 var url = "https://www.sefaria.org/api/texts/Psalms."
 var chapter = "";
-var textField = document.getElementById("text");
+var engTextField = document.getElementById("english-text");
+var hebTextField = document.getElementById("hebrew-text");
 var eng = "";
 var heb = "";
+
+//AJAX call to Sefaria
 
 function findTehellim() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
+            
             var data = JSON.parse(this.responseText);
-            eng += data.text;
-            heb += data.he;
-            textField.innerHTML = (eng + "<br>" + heb);
+            
+            //Create English Text
+
+            for(i=0;i<data.text.length;i++) {
+               eng += "<div class='verse'>" + (i+1) + ". " + data.text[i] + "</div>"; 
+            }
+
+            //Create Hebrew Text
+
+            for(i=0;i<data.he.length;i++) {
+               heb += "<div class='verse'>" + (i+1) + ". " + data.he[i] + "</div>"; 
+            }
+
+            //Appending Generated Text To Page
+
+            engTextField.innerHTML = (eng);
+            hebTextField.innerHTML = (heb);
         }
     };
     xhttp.open("GET", url + chapter, true);
@@ -20,8 +38,6 @@ function findTehellim() {
 
 document.getElementById("button").onclick = function () {
     eng = heb = "";
-    console.log(textField.innerHTML);
     chapter = document.getElementById("chapterInput").value;
-    console.log(chapter);
     findTehellim();
 };
