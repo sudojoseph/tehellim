@@ -22,11 +22,15 @@
                     }
                 }
 
+                //Create English and Hebrew Text
+
                 if (searchLanguage === "engHeb"){
                     for(i=0;i<data.text.length;i++) {
                         outputText += "<div class='verse'>" + (i+1) + ". " + data.he[i] + "</div>" + "<div class='verse'>" + (i+1) + ". " + data.text[i] + "</div>";
                     }
                 }
+
+                //Create Hebrew Text
 
                 if (searchLanguage === "heb"){
                     for(i=0;i<data.text.length;i++) {
@@ -43,12 +47,16 @@
         xhttp.send();
     }
 
+    //set output text
+
     function setOutput() {
         outputText = "";
         chapter = document.getElementById("chapterInput").value;
         findTehellim();
     }
 
+    //buttons
+    
     document.getElementById('eng').onclick = function () {
         searchLanguage = this.id;
         console.log(searchLanguage);
