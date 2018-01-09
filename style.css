@@ -1,1 +1,11 @@
-body,html{width:100%;height:100%;margin:0}body input,html input{width:90%;margin:auto}
+body,
+html {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+body input,
+html input {
+  width: 90%;
+  margin: auto;
+}
