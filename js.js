@@ -8,43 +8,41 @@
     //AJAX call to Sefaria
 
     function findTehellim() {
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
+        let data = '';
 
-                var data = JSON.parse(this.responseText);
+        fetch(url + chapter)
+        .then(result => result.json())
+        .then(jsonData => data = jsonData)
+        .then(function() {
+            
+            //Create English Text
 
-                //Create English Text
-
-                if (searchLanguage === "eng"){
-                    for(i=0;i<data.text.length;i++) {
-                        outputText += "<div class='verse'>" + (i+1) + ". " + data.text[i] + "</div>";
-                    }
+            if (searchLanguage === "eng"){
+                for(i=0;i<data.text.length;i++) {
+                    outputText += "<div class='verse'>" + (i+1) + ". " + data.text[i] + "</div>";
                 }
-
-                //Create English and Hebrew Text
-
-                if (searchLanguage === "engHeb"){
-                    for(i=0;i<data.text.length;i++) {
-                        outputText += "<div class='verse'>" + (i+1) + ". " + data.he[i] + "</div>" + "<div class='verse'>" + (i+1) + ". " + data.text[i] + "</div>";
-                    }
-                }
-
-                //Create Hebrew Text
-
-                if (searchLanguage === "heb"){
-                    for(i=0;i<data.text.length;i++) {
-                        outputText += "<div class='verse'>" + (i+1) + ". " + data.he[i] + "</div>";
-                    }
-                }
-
-                //Appending Generated Text To Page
-
-                textField.innerHTML = (outputText);
             }
-        };
-        xhttp.open("GET", url + chapter, true);
-        xhttp.send();
+
+            //Create English and Hebrew Text
+
+            if (searchLanguage === "engHeb"){
+                for(i=0;i<data.text.length;i++) {
+                    outputText += "<div class='verse'>" + (i+1) + ". " + data.he[i] + "</div>" + "<div class='verse'>" + (i+1) + ". " + data.text[i] + "</div>";
+                }
+            }
+
+            //Create Hebrew Text
+
+            if (searchLanguage === "heb"){
+                for(i=0;i<data.text.length;i++) {
+                    outputText += "<div class='verse'>" + (i+1) + ". " + data.he[i] + "</div>";
+                }
+            }
+
+            //Appending Generated Text To Page
+
+            textField.innerHTML = (outputText);
+        });
     }
 
     //set output text
